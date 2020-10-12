@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
 using System.Text;
 
 namespace MoodAnalyser
@@ -13,10 +14,19 @@ namespace MoodAnalyser
         }
         public string AnalyserMethod()
         {
-            if (this.message.Contains("sad"))
-                return "sad";
-            else
-                return "happy";
+            try
+            {
+                if (this.message.Contains("SAD"))
+                    return "SAD";
+                else if (this.message.Contains("HAPPY"))
+                    return "SAD";
+                else
+                    return "HAPPY";
+            }
+            catch
+            {
+                return "HAPPY";
+            }
         }
     }
 }
