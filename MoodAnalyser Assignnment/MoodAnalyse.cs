@@ -9,13 +9,16 @@ namespace MoodAnalyser
     {
         private string message;
         
-        public MoodAnalyse()
-        {
-
-        }
+       
         public MoodAnalyse(string message)
         {
             this.message = message;
+            Console.WriteLine("parameterised constructor");
+            Console.WriteLine(message);
+        }
+        public MoodAnalyse()
+        {
+            Console.WriteLine("default constructor");
         }
         public string AnalyserMethod()
         {

@@ -63,5 +63,20 @@ namespace MoodAnalyserMSTest
                 Assert.AreEqual("Mood Should not be null", exception.Message);
             }
         }
+        //GivenMoodAnalyserClass_ShouldReturn_MoodAnalyserObject
+        [TestMethod]
+        public void TestMethod5()
+        {
+           
+                string message = "null";
+            object expected = new MoodAnalyse(message);
+            object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyse", "MoodAnalyser");
+            expected.Equals(obj);
+
+
+
+
+
+        }
     }
 }
