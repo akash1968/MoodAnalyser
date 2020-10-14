@@ -38,7 +38,7 @@ namespace MoodAnalyserMSTest
         {
             try
             {
-                string message = "";
+                string message = " ";
                 MoodAnalyse mood = new MoodAnalyse(message);
             }
 
@@ -53,14 +53,14 @@ namespace MoodAnalyserMSTest
         {
             try
             {
-                string message = "null";
+                string message = null;
                 MoodAnalyse mood = new MoodAnalyse(message);
                 string actual = mood.AnalyserMethod();
             }
 
             catch (MoodAnalyserCustomException exception)
             {
-                Assert.AreEqual("Mood Should not be null", exception.Message);
+                Assert.AreEqual("Mood Should not be NULL", exception.Message);
             }
         }
         //GivenMoodAnalyserClass_ShouldReturn_MoodAnalyserObject
@@ -68,14 +68,21 @@ namespace MoodAnalyserMSTest
         public void TestMethod5()
         {
            
-                string message = "null";
+                string message = null;
             object expected = new MoodAnalyse(message);
-            object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyse", "MoodAnalyser");
-            expected.Equals(obj);
+            object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyse", "MoodAnalyse");
+            obj.Equals(expected);
 
+        }
+        //TC_5.1 - Given MoodAnalyser when proper message pass to Parameterized constructor then return mood analyser object
+        [TestMethod]
+        public void TestMethod6()
+        {
 
-
-
+            string message = "HAPPY";
+            object expected = new MoodAnalyse(message);
+            object obj = MoodAnalyserFactory.CreateMoodAnalyseWithParametrizedConstructor("MoodAnalyser.MoodAnalyse", "MoodAnalyse");
+            obj.Equals(expected);
 
         }
     }
