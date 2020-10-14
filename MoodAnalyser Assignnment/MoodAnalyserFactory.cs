@@ -9,7 +9,7 @@ namespace MoodAnalyser
 {
     public class MoodAnalyserFactory
     {
-        public static object CreateMoodAnalyse(string ClassName, string ConstructorName)
+        public static object CreateMoodAnalyse(string ClassName, string ConstructorName,string message)
         {
             string pattern = @"." + ConstructorName + "$";
             var result = Regex.Match(ClassName, pattern);
@@ -31,7 +31,7 @@ namespace MoodAnalyser
                 throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_CONSTRUCTOR, "no such constructor found");
             }
         }
-        public static object CreateMoodAnalyseWithParametrizedConstructor(string className, string constructor)
+        public static object CreateMoodAnalyseWithParametrizedConstructor(string className, string constructor,string message)
         {
             Type type = typeof(MoodAnalyse);
 
@@ -54,6 +54,24 @@ namespace MoodAnalyser
                 throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_CLASS, "Class not found");
             }
         }
+        public static string InvokeAnalyserMethod(string message, string methodName)
+        {
+            try
+            {
+                Type type = Type.GetType("MoodAnalyser.MoodAnalyse");
+                object moodAnalyserObject = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyse", "MoodAnalyse", message);
+                MethodInfo methodInfo = type.GetMethod(methodName);
+                object info = methodInfo.Invoke(moodAnalyserObject, null);
+                return info.ToString();
+            }
 
+            catch (NullReferenceException)
+            {
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_METHOD, "no such method is found");
+
+            }
+        }
+
+       
     }
 }
