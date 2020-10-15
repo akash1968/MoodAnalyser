@@ -9,7 +9,7 @@ namespace MoodAnalyser
 {
     public class MoodAnalyserFactory
     {
-        public static object CreateMoodAnalyse(string ClassName, string ConstructorName,string message)
+       /* public static object CreateMoodAnalyse(string ClassName, string ConstructorName,string message)
         {
             string pattern = @"." + ConstructorName + "$";
             var result = Regex.Match(ClassName, pattern);
@@ -30,8 +30,8 @@ namespace MoodAnalyser
             {
                 throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_CONSTRUCTOR, "no such constructor found");
             }
-        }
-        public static object CreateMoodAnalyseWithParametrizedConstructor(string className, string constructor,string message)
+        }*/
+        public static object CreateMoodAnalyse(string className, string constructor,string message)
         {
             Type type = typeof(MoodAnalyse);
 
@@ -39,37 +39,37 @@ namespace MoodAnalyser
             {
                 if (type.Name.Equals(constructor))
                 {
-                    ConstructorInfo cons = type.GetConstructor(new[] { typeof(string) });
-                    object instance = cons.Invoke(new object[] { "HAPPY" });
-                    return instance;
+                    return Activator.CreateInstance(type, message);
                 }
                 else
                 {
-                    throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_METHOD, "Constructor not found");
+                    throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_METHOD, "No such constructor found");
                 }
 
             }
             else
             {
-                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_CLASS, "Class not found");
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_CLASS, "No such class found");
             }
         }
-        public static string InvokeAnalyserMethod(string message, string methodName)
+        public static Object InvokeAnalyserMethod(string className,string constructor,string message, string methodName)
         {
+            //Get the instance of the MoodAnalyserClass and create a constructor
+            object moodAnalysis = CreateMoodAnalyse(className, constructor, message);
+            Type type = typeof(MoodAnalyse);
             try
             {
-                Type type = Type.GetType("MoodAnalyser.MoodAnalyse");
-                object moodAnalyserObject = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyse", "MoodAnalyse", message);
+                //Fetching the method info using reflection
                 MethodInfo methodInfo = type.GetMethod(methodName);
-                object info = methodInfo.Invoke(moodAnalyserObject, null);
-                return info.ToString();
+                //Invoking the method of Mood Analyser Class
+                Object obj = methodInfo.Invoke(moodAnalysis, null);
+                return obj;
             }
-
             catch (NullReferenceException)
             {
-                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_METHOD, "no such method is found");
-
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_METHOD, "method not found");
             }
+           
         }
 
        
