@@ -9,28 +9,7 @@ namespace MoodAnalyser
 {
     public class MoodAnalyserFactory
     {
-       /* public static object CreateMoodAnalyse(string ClassName, string ConstructorName,string message)
-        {
-            string pattern = @"." + ConstructorName + "$";
-            var result = Regex.Match(ClassName, pattern);
-            if (result.Success)
-            {
-                try
-                {
-                    Assembly assembly = Assembly.GetExecutingAssembly();
-                    Type moodAnalyserType = assembly.GetType(ClassName);
-                    return Activator.CreateInstance(moodAnalyserType);
-                }
-                catch (ArgumentNullException)
-                {
-                    throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_CLASS, "no such class is found");
-                }
-            }
-            else
-            {
-                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.TypeOfException.NO_SUCH_CONSTRUCTOR, "no such constructor found");
-            }
-        }*/
+       
         public static object CreateMoodAnalyse(string className, string constructor,string message)
         {
             Type type = typeof(MoodAnalyse);
