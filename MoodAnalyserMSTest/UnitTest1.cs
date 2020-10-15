@@ -175,7 +175,7 @@ namespace MoodAnalyserMSTest
 
         }
         [TestMethod]
-        //UC 6.1 : Given 'Happy' message when proper should return 'Happy Mood'.
+        //TC 6.1 : Given 'Happy' message when proper should return 'Happy Mood'.
        
         public void GivenHappyMessage_InvokeAnalyseMoodMethod_ShouldReturnHappyMoodMessage()
         {
@@ -189,7 +189,7 @@ namespace MoodAnalyserMSTest
         }
         [TestMethod]
         
-        //UC 6.2 : Given Improper method name must return mood analyser custom exception
+        //TC 6.2 : Given Improper method name must return mood analyser custom exception
         public void GivenHappyMessage_WhenImproperMethod_ShouldThrowMoodAnalysisException()
         {
             //Act
@@ -203,6 +203,46 @@ namespace MoodAnalyserMSTest
             {
                 //Assert
                 Assert.AreEqual("method not found", exception.Message);
+            }
+        }
+        //TC 7.1 When given proper fieldName and a mood message for happy mood then should return HAPPY
+        [TestMethod]
+        public void ChangeMoodDynamicallyForValidFieldName()
+        {
+            // ACT
+            object actual = MoodAnalyserFactory.ChangingTheMoodDynamically("I am happy today", "message");
+
+            // Assert
+            Assert.AreEqual("HAPPY", actual);
+        }
+        // TC 7.2 When given wrong fieldName and a happy mood message then should throw exception
+        [TestMethod]
+        public void ChangeMoodDynamicallyInValid()
+        {
+            try
+            {
+                // ACT
+                object actual = MoodAnalyserFactory.ChangingTheMoodDynamically("I am in happy mood today", "InvalidField");
+            }
+            catch (MoodAnalyserCustomException exception)
+            {
+                // Assert
+                Assert.AreEqual("No such field found", exception.Message);
+            }
+        }
+        //TC 7.3 When given correct fieldName and passing a null mood message then throw error that Mood should not be NULL
+        [TestMethod]
+        public void ChangeMoodDynamicallySetNull()
+        {
+            try
+            {
+                // ACT
+                object actual = MoodAnalyserFactory.ChangingTheMoodDynamically(null, "message");
+            }
+            catch (MoodAnalyserCustomException exception)
+            {
+                // Assert
+                Assert.AreEqual("No such field found", exception.Message);
             }
         }
     }
